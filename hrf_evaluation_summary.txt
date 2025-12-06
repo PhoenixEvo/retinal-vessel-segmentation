@@ -1,0 +1,50 @@
+HRF DATASET EVALUATION SUMMARY (PATCH-BASED)
+============================================================
+
+Model: models/stage4_final_model.pth
+Training sequence: original → hrf_patch → hrf_extended → drive
+Evaluation method: Patch-based inference (no resizing)
+Patch size: 512×512, Overlap: 128
+Number of images evaluated: 45
+
+OVERALL METRICS:
+Accuracy:        0.9642 ± 0.0048
+Precision:       0.7455 ± 0.0729
+Recall:          0.8031 ± 0.0411
+F1-Score:        0.7710 ± 0.0447
+Dice Coefficient: 0.7710 ± 0.0447
+IoU (Jaccard):   0.6295 ± 0.0600
+
+PIXEL-LEVEL ANALYSIS:
+True Positives:   22,843,615
+True Negatives:   332,317,022
+False Positives:  7,626,067
+False Negatives:  5,553,776
+Sensitivity:      0.8044
+Specificity:      0.9776
+
+CATEGORY-WISE PERFORMANCE:
+
+HEALTHY (n=15):
+  accuracy: 0.9684 ± 0.0031
+  precision: 0.8398 ± 0.0235
+  recall: 0.8148 ± 0.0313
+  f1_score: 0.8265 ± 0.0181
+  dice_coefficient: 0.8265 ± 0.0181
+  iou: 0.7048 ± 0.0264
+
+GLAUCOMA (n=15):
+  accuracy: 0.9636 ± 0.0031
+  precision: 0.7072 ± 0.0196
+  recall: 0.8053 ± 0.0300
+  f1_score: 0.7525 ± 0.0141
+  dice_coefficient: 0.7525 ± 0.0141
+  iou: 0.6034 ± 0.0180
+
+DR (n=15):
+  accuracy: 0.9607 ± 0.0043
+  precision: 0.6896 ± 0.0388
+  recall: 0.7891 ± 0.0533
+  f1_score: 0.7339 ± 0.0257
+  dice_coefficient: 0.7339 ± 0.0257
+  iou: 0.5802 ± 0.0316

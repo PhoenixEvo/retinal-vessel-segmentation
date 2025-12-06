@@ -1,0 +1,117 @@
+# Sequential Training Configuration for Retinal Vessel Segmentation
+# Project: Advanced Retinal Vessel Analysis using Deep Learning
+
+# Model Configuration
+model:
+  architecture: "UnetPlusPlus"
+  encoder_name: "efficientnet-b4"
+  encoder_weights: "imagenet"
+  in_channels: 3
+  classes: 1
+  decoder_channels: [256, 128, 64, 32, 16]
+
+# Data Configuration
+data:
+  datasets:
+    drive:
+      path: "data/DRIVE"
+      image_size: [584, 565]
+      num_images: 40
+      train_split: 20
+      test_split: 20
+    hrf:
+      path: "data/HRF"
+      image_size: [3504, 2336] 
+      num_images: 45
+      categories: ["healthy", "diabetic_retinopathy", "glaucomatous"]
+  
+  preprocessing:
+    target_size: [512, 512]
+    normalization:
+      mean: [0.485, 0.456, 0.406]
+      std: [0.229, 0.224, 0.225]
+
+# Training Stages Configuration
+stages:
+  stage1_base_training:
+    description: "Combined DRIVE + HRF training for foundation knowledge"
+    model_output: "models/stage1_base_model.pth"
+    epochs: 200
+    batch_size: 4
+    learning_rate: 3e-4
+    optimizer: "AdamW"
+    weight_decay: 1e-4
+    scheduler:
+      type: "ReduceLROnPlateau"
+      factor: 0.5
+      patience: 5
+    early_stopping:
+      patience: 15
+    loss_function: "DiceBCELoss"
+    mixed_precision: true
+    gradient_clipping: 1.0
+
+  stage2_patch_finetune:
+    description: "Patch-based fine-tuning on HRF for high-resolution expertise"
+    model_input: "models/stage1_base_model.pth"
+    model_output: "models/stage2_patch_finetuned.pth"
+    epochs: 30
+    batch_size: 8
+    learning_rate: 5e-5
+    patch_size: 512
+    overlap: 128
+    min_vessel_ratio: 0.01
+    progressive_unfreezing: true
+    optimizer: "AdamW"
+    weight_decay: 1e-4
+    scheduler:
+      type: "CosineAnnealingWarmRestarts"
+      T_0: 8
+      T_mult: 2
+      eta_min: 1e-7
+    loss_function: "DiceBCELoss"
+    mixed_precision: true
+
+  stage3_extended_train:
+    description: "Extended training for enhanced convergence"
+    model_input: "models/stage2_patch_finetuned.pth"
+    model_output: "models/stage3_extended_model.pth"
+    target_dice: 0.85
+    additional_epochs: 20
+    same_config_as: "stage2_patch_finetune"
+
+  stage4_domain_adapt:
+    description: "Domain adaptation from HRF to DRIVE characteristics"
+    model_input: "models/stage3_extended_model.pth"
+    model_output: "models/stage4_final_model.pth"
+    epochs: 30
+    batch_size: 2
+    learning_rate: 5e-5
+    patch_size: 384
+    overlap: 64
+    min_improvement: 0.001
+    patience: 8
+    optimizer: "AdamW"
+    weight_decay: 1e-5
+    loss_function: "CombinedLoss"
+    mixed_precision: true
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - "dice_coefficient"
+    - "fov_aware_dice"
+    - "sensitivity"
+    - "specificity"
+  test_datasets:
+    - "DRIVE_test"
+  output_dir: "results/evaluations"
+
+# Deployment Configuration
+deployment:
+  webapp:
+    framework: "Flask"
+    port: 5000
+    max_file_size: "16MB"
+    supported_formats: ["JPEG", "PNG", "TIFF"]
+  model_path: "models/stage4_final_model.pth" 

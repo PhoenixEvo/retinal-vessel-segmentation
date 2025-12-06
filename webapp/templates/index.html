@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project_info.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>{{ project_info.title }}</h1>
+            <!-- <p>{{ project_info.school }}</p>
+            <p>{{ project_info.faculty }} - {{ project_info.year }}</p> -->
+            <p><strong>Project Code:</strong> {{ project_info.project_code }}</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Project Summary Section -->
+        <section class="project-summary">
+            <div class="section">
+                <h2>Project Overview</h2>
+                <p class="project-description">{{ project_info.project_summary.description }}</p>
+                
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <h3>Project Objectives</h3>
+                        <ul>
+                            {% for objective in project_info.project_summary.objectives %}
+                                <li>{{ objective }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <div class="summary-box">
+                        <h3>Key Achievements</h3>
+                        <ul>
+                            {% for achievement in project_info.project_summary.achievements %}
+                                <li>{{ achievement }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-info">
+            <div class="section members-section">
+                <div class="members-container">
+                    <!-- Project Leader Section -->
+                    <div class="leader-section">
+                        <h2>Project Leader</h2>
+                        <div class="member-card leader-card">
+                            <h3>{{ project_info.project_leader.name }}</h3>
+                            <p class="role-badge leader-badge">{{ project_info.project_leader.role }}</p>
+                            <!--<p>Student ID: {{ project_info.project_leader.student_id }}</p>-->
+                            <!--<p>Class: {{ project_info.project_leader.class }}</p>-->
+                        </div>
+                    </div>
+
+                    <!-- Team Members Section -->
+                    <div class="team-section">
+                        <h2>👥 Team Members</h2>
+                        <div class="members-grid">
+                            {% for member in project_info.team_members %}
+                            <div class="member-card">
+                                <h3>{{ member.name }}</h3>
+                                <p class="role-badge member-badge">{{ member.role }}</p>
+                                <!--<p>Student ID: {{ member.student_id }}</p>-->
+                                <!--<p>Class: {{ member.class }}</p>-->
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Supervisor Section -->
+                    <!-- <div class="supervisor-section">
+                        <h2>👨‍🏫 Project Supervisor</h2>
+                        <div class="member-card supervisor-card">
+                            <h3>{{ project_info.supervisor.name }}</h3>
+                            <p class="role-badge supervisor-badge">{{ project_info.supervisor.role }}</p>
+                            <p>{{ project_info.supervisor.title }}</p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Model Information</h2>
+                <div class="model-info-grid">
+                    <div class="info-card">
+                        <h3>Architecture</h3>
+                        <p>{{ project_info.model_info.architecture }}</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Dataset</h3>
+                        <p>{{ project_info.model_info.dataset }}</p>
+                    </div>
+                    <!--<div class="info-card">
+                        <h3>Performance</h3>
+                        <p>{{ project_info.model_info.performance }}</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Model File</h3>
+                        <p>{{ project_info.model_info.model_file }}</p>
+                    </div>-->
+                </div>
+                
+                <h3>Training Methodology (4-Stage Sequential):</h3>
+                <ol class="training-stages">
+                    {% for stage in project_info.model_info.training_stages %}
+                        <li>{{ stage }}</li>
+                    {% endfor %}
+                </ol>
+                
+                <h3>Technical Features:</h3>
+                <ul class="features-list">
+                    {% for feature in project_info.model_info.features %}
+                        <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+
+        <section class="upload-section">
+                            <h2>Retinal Vessel Segmentation Demo</h2>
+            <p class="demo-description">
+                Tải lên hình ảnh võng mạc để xem kết quả phân đoạn mạch máu. 
+                Hỗ trợ các định dạng JPEG, PNG, và TIFF. Để có kết quả tốt nhất, sử dụng ảnh võng mạc chất lượng cao.
+            </p>
+            <div class="upload-box" id="upload-box">
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+                <div class="upload-content">
+                    <div class="upload-icon">📁</div>
+                    <p>Click or drag and drop an image here</p>
+                    <p class="upload-hint">Supported formats: JPEG, PNG, TIFF</p>
+                </div>
+                <p id="file-name"></p>
+            </div>
+            <button class="btn" id="upload-btn" style="display: none;">Process Image</button>
+            <p id="error-message" style="display: none; color: var(--accent-color);"></p>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing image...</p>
+            </div>
+            
+            <div class="results-section" id="results-section">
+                <h3>Results</h3>
+                <div class="results-container">
+                    <div class="result-box">
+                        <h3>📷 Original Image</h3>
+                        <div class="result-box-image-container">
+                            <img id="input-image" alt="Original Image">
+                        </div>
+                        <p id="input-dimensions"></p>
+                    </div>
+                    <div class="result-box">
+                        <h3>Segmentation Result</h3>
+                        <div class="result-box-image-container">
+                            <img id="output-image" alt="Segmentation Result">
+                        </div>
+                        <p id="output-dimensions"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

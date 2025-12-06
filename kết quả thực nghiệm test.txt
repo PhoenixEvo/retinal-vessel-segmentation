@@ -1,0 +1,30 @@
+Thông tin chung
+Model sử dụng: Stage 4 Final Model (models/stage4_final_model.pth)
+Phương pháp đánh giá: Patch-based inference (512×512 patches, overlap 128px)
+Tổng số ảnh test: 9 ảnh (20% của tổng dataset HRF)
+Tỷ lệ thành công: 9/9 ảnh (100%)
+Danh sách ảnh test:
+Healthy: 09_h.jpg, 12_h.jpg, 14_h.jpg, 03_h.jpg (4 ảnh)
+Glaucoma: 09_g.jpg, 15_g.jpg, 02_g.jpg (3 ảnh)
+Diabetic Retinopathy: 14_dr.JPG, 05_dr.JPG (2 ảnh)
+ KẾT QUẢ TỔNG THỂ
+Metric	Giá trị trung bình	Độ lệch chuẩn
+Accuracy	96.29%	±0.44%
+Precision	75.08%	±8.06%
+Recall (Sensitivity)	80.68%	±3.74%
+F1-Score	77.43%	±4.01%
+Dice Coefficient	77.43%	±4.01%
+IoU (Jaccard)	63.36%	±5.43%
+ KẾT QUẢ THEO DANH MỤC
+🟢 Healthy Images (n=4)
+Dice Score trung bình: 81.49% (tốt nhất)
+Accuracy trung bình: 96.77%
+Precision trung bình: 84.63%
+🟡 Glaucoma Images (n=3)
+Dice Score trung bình: 74.08%
+Accuracy trung bình: 96.14%
+Precision trung bình: 69.49%
+🔴 Diabetic Retinopathy Images (n=2)
+Dice Score trung bình: 72.80%
+Accuracy trung bình: 95.83%
+Precision trung bình: 66.54%

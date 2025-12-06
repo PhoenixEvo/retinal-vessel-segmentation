@@ -1,0 +1,25 @@
+HRF TEST SET EVALUATION SUMMARY
+========================================
+
+Model: models/stage4_final_model.pth
+Test images evaluated: 9/9
+
+TEST SET FILES:
+ 1. 14_dr.JPG
+ 2. 09_g.jpg
+ 3. 09_h.jpg
+ 4. 15_g.jpg
+ 5. 12_h.jpg
+ 6. 14_h.jpg
+ 7. 02_g.jpg
+ 8. 05_dr.JPG
+ 9. 03_h.jpg
+
+OVERALL TEST METRICS:
+accuracy: 0.9629 ± 0.0044
+precision: 0.7507 ± 0.0806
+recall: 0.8068 ± 0.0374
+specificity: 0.9769 ± 0.0068
+f1_score: 0.7743 ± 0.0401
+dice_coefficient: 0.7743 ± 0.0401
+iou: 0.6336 ± 0.0543

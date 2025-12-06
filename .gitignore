@@ -1,0 +1,46 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Data and artifacts
+data/
+models/
+results/
+wandb/
+drive_challenge_predictions/
+hrf_predictions_sequential/
+static/uploads/
+
+# Checkpoints and logs
+*.pth
+*.pt
+*.ckpt
+*.log
+logs/
+
+*.csv
+# Jupyter
+.ipynb_checkpoints/
+
+# Node/web extras
+node_modules/
+package-lock.json
+yarn.lock
+

@@ -2,6 +2,8 @@
 
 High-resolution retinal vessel segmentation using U-Net++ (EfficientNet-B4 encoder) and a four-stage sequential training pipeline, plus a Flask web app for real-time inference.
 
+<img width="2235" height="654" alt="02_h_visualization" src="https://github.com/user-attachments/assets/56ca42a1-7aa4-4da2-9694-2f11026921f6" />
+
 ## Highlights
 - Architecture: U-Net++ with attention, mixed precision, Dice+BCE loss.
 - Data: DRIVE and HRF, patch-based training to save memory.
@@ -86,22 +88,6 @@ python app.py
 - Do not commit data, checkpoints (.pth), `results/`, `wandb/`. Patterns are already in `.gitignore`.
 - For checkpoint tracking, use Git LFS or attach them as release assets.
 
-## Push to GitHub
-1) Initialize repo (if not yet):
-```
-git init
-git add .gitignore README.md
-git add .
-git commit -m "Add project and README"
-```
-2) Create an empty GitHub repo and grab the URL `https://github.com/<user>/<repo>.git`.
-3) Connect and push:
-```
-git remote add origin <YOUR_REPO_URL>
-git branch -M main
-git push -u origin main
-```
-4) If large files (>100MB) cause errors, use Git LFS for `.pth` or exclude those files before `git add`.
 
 ## Contact
 Nguyễn Nhật Phát - 23110053@student.hcmute.edu.vn
